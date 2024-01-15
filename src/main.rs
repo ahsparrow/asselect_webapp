@@ -1,15 +1,30 @@
-use gloo_console::log;
-use gloo_net::http::Request;
-use gloo_net::Error;
-use yew::{function_component, html, use_effect_with, use_state, Callback, Html};
+use gloo::console::log;
+use gloo::net::{http::Request, Error};
+use gloo::storage::{LocalStorage, Storage};
+use wasm_bindgen::JsValue;
+use yew::{function_component, html, use_effect_with, use_reducer, use_state, Callback, Html};
 
-use yaixm::Yaixm;
+use components::{airspace_tab::AirspaceTab, tabs::Tabs};
+use state::{Action, State};
+use yaixm::{gliding_sites, Yaixm};
 
+mod components;
+mod state;
 mod yaixm;
+
+// Callback data structures
+pub struct AirspaceSetting {
+    pub name: String,
+    pub value: String,
+}
 
 #[function_component]
 fn App() -> Html {
     let yaixm = use_state(|| None);
+
+    let state = use_reducer(|| State {
+        settings: LocalStorage::get("settings").unwrap_or_default(),
+    });
 
     // Fetch YAIXM data
     {
@@ -26,8 +41,25 @@ fn App() -> Html {
     }
 
     let onsave = {
+        let state = state.clone();
         Callback::from(move |_| {
-            log!("Click");
+            // Save settings in local storage
+            LocalStorage::set("settings", &state.settings).ok();
+
+            let a = state.settings.clone();
+            let object = JsValue::from(format!("{:?}", a));
+            log!(object);
+        })
+    };
+
+    // Airspace settings callback
+    let onairspace_set = {
+        let state = state.clone();
+        Callback::from(move |setting: AirspaceSetting| {
+            state.dispatch(Action::Set {
+                name: setting.name,
+                value: setting.value,
+            })
         })
     };
 
@@ -35,6 +67,11 @@ fn App() -> Html {
     match yaixm.as_ref() {
         // Render full interface if YAIXM data is available
         Some(yaixm) => {
+            let mut gliding_sites = gliding_sites(yaixm);
+            gliding_sites.sort();
+
+            let tab_names = vec!["Main".to_string()];
+
             html! {
                 <>
                 <header class="hero is-small is-primary block">
@@ -46,6 +83,12 @@ fn App() -> Html {
                     </div>
                   </div>
                 </header>
+
+                <div class="container block">
+                  <Tabs {tab_names}>
+                    <AirspaceTab settings={state.settings.clone()} {gliding_sites} callback={onairspace_set.clone()} />
+                  </Tabs>
+                </div>
 
                 <div class="container block">
                   <div class="mx-4">

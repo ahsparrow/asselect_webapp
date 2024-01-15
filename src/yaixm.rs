@@ -186,3 +186,13 @@ pub struct Yaixm {
     pub service: Vec<Service>,
     pub release: Release,
 }
+
+// List of gliding sites
+pub fn gliding_sites(yaixm: &Yaixm) -> Vec<String> {
+    yaixm
+        .airspace
+        .iter()
+        .filter(|x| x.icao_type == IcaoType::Other && x.local_type == Some(LocalType::Glider))
+        .map(|x| x.name.clone())
+        .collect::<Vec<String>>()
+}
