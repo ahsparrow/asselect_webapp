@@ -1,6 +1,7 @@
+use gloo_console::log;
 use gloo_net::http::Request;
 use gloo_net::Error;
-use yew::{function_component, html, use_effect_with, use_state, Html};
+use yew::{function_component, html, use_effect_with, use_state, Callback, Html};
 
 use yaixm::Yaixm;
 
@@ -24,12 +25,36 @@ fn App() -> Html {
         });
     }
 
+    let onsave = {
+        Callback::from(move |_| {
+            log!("Click");
+        })
+    };
+
     // HTML rendering
     match yaixm.as_ref() {
         // Render full interface if YAIXM data is available
         Some(yaixm) => {
             html! {
-                yaixm.release.airac_date.as_str()
+                <>
+                <header class="hero is-small is-primary block">
+                  <div class="hero-body">
+                    <div class="container">
+                      <div class="title is-4">
+                        {"ASSelect - UK Airspace"}
+                      </div>
+                    </div>
+                  </div>
+                </header>
+
+                <div class="container block">
+                  <div class="mx-4">
+                    <button class="button is-primary" onclick={onsave}>
+                      {"Save"}
+                    </button>
+                  </div>
+                </div>
+                </>
             }
         }
 
