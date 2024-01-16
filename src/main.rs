@@ -4,9 +4,11 @@ use gloo::storage::{LocalStorage, Storage};
 use wasm_bindgen::JsValue;
 use yew::{function_component, html, use_effect_with, use_reducer, use_state, Callback, Html};
 
-use components::{airspace_tab::AirspaceTab, tabs::Tabs};
+use components::{
+    airspace_tab::AirspaceTab, extra_panel::ExtraPanel, extra_tab::ExtraTab, tabs::Tabs,
+};
 use state::{Action, State};
-use yaixm::{gliding_sites, Yaixm};
+use yaixm::{gliding_sites, loa_names, rat_names, wave_names, Yaixm};
 
 mod components;
 mod state;
@@ -16,6 +18,19 @@ mod yaixm;
 pub struct AirspaceSetting {
     pub name: String,
     pub value: String,
+}
+
+#[derive(Clone, Copy, Eq, PartialEq)]
+pub enum ExtraCategory {
+    Rat,
+    Loa,
+    Wave,
+}
+
+pub struct ExtraSetting {
+    pub category: ExtraCategory,
+    pub name: String,
+    pub checked: bool,
 }
 
 #[function_component]
@@ -52,6 +67,35 @@ fn App() -> Html {
         })
     };
 
+    // RAT/LOA/Wave setting callback
+    let onextra_set = {
+        let state = state.clone();
+        Callback::from(move |setting: ExtraSetting| match setting.category {
+            ExtraCategory::Rat => state.dispatch(Action::SetRat {
+                name: setting.name,
+                checked: setting.checked,
+            }),
+            ExtraCategory::Loa => state.dispatch(Action::SetLoa {
+                name: setting.name,
+                checked: setting.checked,
+            }),
+            ExtraCategory::Wave => state.dispatch(Action::SetWave {
+                name: setting.name,
+                checked: setting.checked,
+            }),
+        })
+    };
+
+    // RAT/LOA/Wave clear callback
+    let onextra_clear = {
+        let state = state.clone();
+        Callback::from(move |category: ExtraCategory| match category {
+            ExtraCategory::Rat => state.dispatch(Action::ClearRat),
+            ExtraCategory::Loa => state.dispatch(Action::ClearLoa),
+            ExtraCategory::Wave => state.dispatch(Action::ClearWave),
+        })
+    };
+
     // Airspace settings callback
     let onairspace_set = {
         let state = state.clone();
@@ -70,7 +114,23 @@ fn App() -> Html {
             let mut gliding_sites = gliding_sites(yaixm);
             gliding_sites.sort();
 
-            let tab_names = vec!["Main".to_string()];
+            let rat_selected = state.settings.rat.clone();
+            let rat_names = rat_names(yaixm);
+
+            let loa_selected = state.settings.loa.clone();
+            let loa_names = loa_names(yaixm);
+
+            let wave_selected = state.settings.wave.clone();
+            let mut wave_names = wave_names(yaixm);
+            wave_names.sort();
+
+            let extra_names = vec![
+                "Temporary Restrictions".to_string(),
+                "Local Agreements".to_string(),
+                "Wave Boxes".to_string(),
+            ];
+
+            let tab_names = vec!["Main".to_string(), "Extra".to_string()];
 
             html! {
                 <>
@@ -87,13 +147,18 @@ fn App() -> Html {
                 <div class="container block">
                   <Tabs {tab_names}>
                     <AirspaceTab settings={state.settings.clone()} {gliding_sites} callback={onairspace_set.clone()} />
+                    <ExtraTab names={extra_names} categories={vec![ExtraCategory::Rat, ExtraCategory::Loa, ExtraCategory::Wave]} on_clear={onextra_clear.clone()}>
+                      <ExtraPanel category={ExtraCategory::Rat} names={rat_names} selected={rat_selected} callback={onextra_set.clone()}/>
+                      <ExtraPanel category={ExtraCategory::Loa} names={loa_names} selected={loa_selected} callback={onextra_set.clone()}/>
+                      <ExtraPanel category={ExtraCategory::Wave} names={wave_names} selected={wave_selected} callback={onextra_set.clone()}/>
+                    </ExtraTab>
                   </Tabs>
                 </div>
 
                 <div class="container block">
                   <div class="mx-4">
                     <button class="button is-primary" onclick={onsave}>
-                      {"Save"}
+                      {"Get Airspace"}
                     </button>
                   </div>
                 </div>

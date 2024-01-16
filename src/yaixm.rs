@@ -196,3 +196,28 @@ pub fn gliding_sites(yaixm: &Yaixm) -> Vec<String> {
         .map(|x| x.name.clone())
         .collect::<Vec<String>>()
 }
+
+// List of RAT names
+pub fn rat_names(yaixm: &Yaixm) -> Vec<String> {
+    let rat = &yaixm.rat;
+    rat.iter().map(|x| x.name.clone()).collect::<Vec<String>>()
+}
+
+// List of LOA names
+pub fn loa_names(yaixm: &Yaixm) -> Vec<String> {
+    let loa = &yaixm.loa;
+    loa.iter()
+        .filter(|x| !x.default.unwrap_or(false))
+        .map(|x| x.name.clone())
+        .collect::<Vec<String>>()
+}
+
+// List of Wave boxes
+pub fn wave_names(yaixm: &Yaixm) -> Vec<String> {
+    yaixm
+        .airspace
+        .iter()
+        .filter(|x| x.icao_type == IcaoType::DOther && x.local_type == Some(LocalType::Glider))
+        .map(|x| x.name.clone())
+        .collect::<Vec<String>>()
+}
