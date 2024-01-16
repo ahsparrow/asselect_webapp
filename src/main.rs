@@ -2,7 +2,7 @@ use gloo::console::log;
 use gloo::net::{http::Request, Error};
 use gloo::storage::{LocalStorage, Storage};
 use wasm_bindgen::JsValue;
-use yew::{function_component, html, use_effect_with, use_reducer, use_state, Callback, Html};
+use yew::{classes, function_component, html, use_effect_with, use_reducer, use_state, Callback, Html};
 
 use components::{
     airspace_tab::AirspaceTab,
@@ -45,6 +45,8 @@ fn App() -> Html {
         settings: LocalStorage::get("settings").unwrap_or_default(),
     });
 
+    let show_release = use_state(|| false);
+
     // Fetch YAIXM data
     {
         let yaixm = yaixm.clone();
@@ -68,6 +70,20 @@ fn App() -> Html {
             let a = state.settings.clone();
             let object = JsValue::from(format!("{:?}", a));
             log!(object);
+        })
+    };
+
+    let onshow_release = {
+        let show_release = show_release.clone();
+        Callback::from(move |_| {
+            show_release.set(true);
+        })
+    };
+
+    let onhide_release = {
+        let show_release = show_release.clone();
+        Callback::from(move |_| {
+            show_release.set(false);
         })
     };
 
@@ -115,6 +131,9 @@ fn App() -> Html {
     match yaixm.as_ref() {
         // Render full interface if YAIXM data is available
         Some(yaixm) => {
+            let airac_date = &yaixm.release.airac_date[..10];
+            let release_note = &yaixm.release.note;
+
             let mut gliding_sites = gliding_sites(yaixm);
             gliding_sites.sort();
 
@@ -165,7 +184,21 @@ fn App() -> Html {
                     <button class="button is-primary" onclick={onsave}>
                       {"Get Airspace"}
                     </button>
+                    <a id="airac-button" class="button is-text is-pulled-right" onclick={onshow_release}>
+                    {"AIRAC: "}{ airac_date }
+                    </a>
                   </div>
+                </div>
+
+                <div class={classes!("modal", show_release.then(|| Some("is-active")))}>
+                  <div class="modal-background"></div>
+                  <div class="modal-content">
+                    <div class="box">
+                      <h2 class="subtitle">{"Release Details"}</h2>
+                      <pre>{ release_note }</pre>
+                    </div>
+                  </div>
+                  <button id="modal-close" class="modal-close is-large" onclick={onhide_release.clone()}></button>
                 </div>
                 </>
             }
