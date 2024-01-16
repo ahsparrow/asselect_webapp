@@ -1,7 +1,7 @@
 use web_sys::HtmlElement;
 use yew::{
-    classes, function_component, html, use_state, AttrValue, Callback, Children, Html, MouseEvent, Properties,
-    TargetCast,
+    classes, function_component, html, use_state, AttrValue, Callback, Children, Html, MouseEvent,
+    Properties, TargetCast,
 };
 
 #[derive(Properties, PartialEq)]

@@ -2,15 +2,14 @@ use gloo::console::log;
 use gloo::net::{http::Request, Error};
 use gloo::storage::{LocalStorage, Storage};
 use wasm_bindgen::JsValue;
-use yew::{classes, function_component, html, use_effect_with, use_reducer, use_state, AttrValue, Callback, Html};
+use yew::{
+    classes, function_component, html, use_effect_with, use_reducer, use_state, AttrValue,
+    Callback, Html,
+};
 
 use components::{
-    airspace_tab::AirspaceTab,
-    extra_panel::ExtraPanel,
-    extra_tab::ExtraTab,
-    notam_tab::NotamTab,
-    options_tab::OptionsTab,
-    tabs::Tabs,
+    airspace_tab::AirspaceTab, extra_panel::ExtraPanel, extra_tab::ExtraTab, notam_tab::NotamTab,
+    options_tab::OptionsTab, tabs::Tabs,
 };
 use state::{Action, State};
 use yaixm::{gliding_sites, loa_names, rat_names, wave_names, Yaixm};
@@ -40,12 +39,15 @@ pub struct ExtraSetting {
 
 #[function_component]
 fn App() -> Html {
+    // Airspace data
     let yaixm = use_state(|| None);
 
+    // User interface settings
     let state = use_reducer(|| State {
         settings: LocalStorage::get("settings").unwrap_or_default(),
     });
 
+    // Release modal control
     let show_release = use_state(|| false);
 
     // Fetch YAIXM data
@@ -62,6 +64,7 @@ fn App() -> Html {
         });
     }
 
+    // Save airspace callback
     let onsave = {
         let state = state.clone();
         Callback::from(move |_| {
@@ -74,6 +77,7 @@ fn App() -> Html {
         })
     };
 
+    // Release modal callbacks
     let onshow_release = {
         let show_release = show_release.clone();
         Callback::from(move |_| {
@@ -85,6 +89,17 @@ fn App() -> Html {
         let show_release = show_release.clone();
         Callback::from(move |_| {
             show_release.set(false);
+        })
+    };
+
+    // General settings callback
+    let onairspace_set = {
+        let state = state.clone();
+        Callback::from(move |setting: AirspaceSetting| {
+            state.dispatch(Action::Set {
+                name: setting.name,
+                value: setting.value,
+            })
         })
     };
 
@@ -114,17 +129,6 @@ fn App() -> Html {
             ExtraCategory::Rat => state.dispatch(Action::ClearRat),
             ExtraCategory::Loa => state.dispatch(Action::ClearLoa),
             ExtraCategory::Wave => state.dispatch(Action::ClearWave),
-        })
-    };
-
-    // Airspace settings callback
-    let onairspace_set = {
-        let state = state.clone();
-        Callback::from(move |setting: AirspaceSetting| {
-            state.dispatch(Action::Set {
-                name: setting.name,
-                value: setting.value,
-            })
         })
     };
 
@@ -213,7 +217,7 @@ fn App() -> Html {
 
         None => {
             html! {
-                { "No YAIXM" }
+                { "Loading YAIXM..." }
             }
         }
     }
