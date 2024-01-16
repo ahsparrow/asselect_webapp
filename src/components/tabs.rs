@@ -1,12 +1,12 @@
 use web_sys::HtmlElement;
 use yew::{
-    classes, function_component, html, use_state, Callback, Children, Html, MouseEvent, Properties,
+    classes, function_component, html, use_state, AttrValue, Callback, Children, Html, MouseEvent, Properties,
     TargetCast,
 };
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub tab_names: Vec<String>,
+    pub tab_names: Vec<AttrValue>,
     pub children: Children,
 }
 

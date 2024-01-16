@@ -1,10 +1,10 @@
 use crate::ExtraCategory;
-use yew::{function_component, html, use_state, Callback, Children, Html, Properties};
+use yew::{function_component, html, use_state, AttrValue, Callback, Children, Html, Properties};
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub children: Children,
-    pub names: Vec<String>,
+    pub names: Vec<AttrValue>,
     pub categories: Vec<ExtraCategory>,
     pub on_clear: Callback<ExtraCategory>,
 }

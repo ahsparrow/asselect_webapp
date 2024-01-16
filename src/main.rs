@@ -2,12 +2,13 @@ use gloo::console::log;
 use gloo::net::{http::Request, Error};
 use gloo::storage::{LocalStorage, Storage};
 use wasm_bindgen::JsValue;
-use yew::{classes, function_component, html, use_effect_with, use_reducer, use_state, Callback, Html};
+use yew::{classes, function_component, html, use_effect_with, use_reducer, use_state, AttrValue, Callback, Html};
 
 use components::{
     airspace_tab::AirspaceTab,
     extra_panel::ExtraPanel,
     extra_tab::ExtraTab,
+    notam_tab::NotamTab,
     options_tab::OptionsTab,
     tabs::Tabs,
 };
@@ -148,12 +149,17 @@ fn App() -> Html {
             wave_names.sort();
 
             let extra_names = vec![
-                "Temporary Restrictions".to_string(),
-                "Local Agreements".to_string(),
-                "Wave Boxes".to_string(),
+                AttrValue::Static("Temporary Restrictions"),
+                AttrValue::Static("Local Agreements"),
+                AttrValue::Static("Wave Boxes"),
             ];
 
-            let tab_names = vec!["Main".to_string(), "Option".to_string(), "Extra".to_string()];
+            let tab_names = vec![
+                AttrValue::Static("Main"),
+                AttrValue::Static("Option"),
+                AttrValue::Static("Extra"),
+                AttrValue::Static("NOTAM"),
+            ];
 
             html! {
                 <>
@@ -176,6 +182,7 @@ fn App() -> Html {
                       <ExtraPanel category={ExtraCategory::Loa} names={loa_names} selected={loa_selected} callback={onextra_set.clone()}/>
                       <ExtraPanel category={ExtraCategory::Wave} names={wave_names} selected={wave_selected} callback={onextra_set.clone()}/>
                     </ExtraTab>
+                    <NotamTab />
                   </Tabs>
                 </div>
 
