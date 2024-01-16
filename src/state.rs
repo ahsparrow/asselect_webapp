@@ -36,7 +36,6 @@ pub enum Format {
 // Altutude layer overlay
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub enum Overlay {
-    None,
     FL105,
     FL65,
     AtzDz,
@@ -52,11 +51,11 @@ pub struct Settings {
     pub gliding: Option<AirType>,
     pub home: Option<String>,
     pub hirta_gvs: Option<AirType>,
-    pub obstacle: bool,
+    pub obstacle: Option<AirType>,
     pub max_level: u16,
     pub radio: bool,
     pub format: Format,
-    pub overlay: Overlay,
+    pub overlay: Option<Overlay>,
     #[serde(default)]
     pub loa: HashSet<String>,
     #[serde(default)]
@@ -75,11 +74,11 @@ impl Default for Settings {
             gliding: None,
             home: None,
             hirta_gvs: None,
-            obstacle: false,
+            obstacle: None,
             max_level: 660,
             radio: false,
             format: Format::OpenAir,
-            overlay: Overlay::None,
+            overlay: None,
             loa: HashSet::new(),
             rat: HashSet::new(),
             wave: HashSet::new(),
@@ -118,16 +117,16 @@ impl Reducible for State {
                     "microlight" => set.microlight = get_airtype(&value),
                     "gliding" => set.gliding = get_airtype(&value),
                     "hirta_gvs" => set.hirta_gvs = get_airtype(&value),
-                    "obstacle" => set.obstacle = value == "include",
+                    "obstacle" => set.obstacle = get_airtype(&value),
                     "max_level" => set.max_level = value.parse::<u16>().unwrap(),
                     "radio" => set.radio = value == "yes",
                     "home" => set.home = if value == "None" { None } else { Some(value) },
                     "overlay" => {
                         set.overlay = match value.as_str() {
-                            "fl105" => Overlay::FL105,
-                            "fl65" => Overlay::FL65,
-                            "atzdz" => Overlay::AtzDz,
-                            _ => Overlay::None,
+                            "fl105" => Some(Overlay::FL105),
+                            "fl65" => Some(Overlay::FL65),
+                            "atzdz" => Some(Overlay::AtzDz),
+                            _ => None,
                         }
                     }
                     "format" => {

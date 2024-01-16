@@ -5,7 +5,11 @@ use wasm_bindgen::JsValue;
 use yew::{function_component, html, use_effect_with, use_reducer, use_state, Callback, Html};
 
 use components::{
-    airspace_tab::AirspaceTab, extra_panel::ExtraPanel, extra_tab::ExtraTab, tabs::Tabs,
+    airspace_tab::AirspaceTab,
+    extra_panel::ExtraPanel,
+    extra_tab::ExtraTab,
+    options_tab::OptionsTab,
+    tabs::Tabs,
 };
 use state::{Action, State};
 use yaixm::{gliding_sites, loa_names, rat_names, wave_names, Yaixm};
@@ -130,7 +134,7 @@ fn App() -> Html {
                 "Wave Boxes".to_string(),
             ];
 
-            let tab_names = vec!["Main".to_string(), "Extra".to_string()];
+            let tab_names = vec!["Main".to_string(), "Option".to_string(), "Extra".to_string()];
 
             html! {
                 <>
@@ -147,6 +151,7 @@ fn App() -> Html {
                 <div class="container block">
                   <Tabs {tab_names}>
                     <AirspaceTab settings={state.settings.clone()} {gliding_sites} callback={onairspace_set.clone()} />
+                    <OptionsTab settings={state.settings.clone()} callback={onairspace_set.clone()} />
                     <ExtraTab names={extra_names} categories={vec![ExtraCategory::Rat, ExtraCategory::Loa, ExtraCategory::Wave]} on_clear={onextra_clear.clone()}>
                       <ExtraPanel category={ExtraCategory::Rat} names={rat_names} selected={rat_selected} callback={onextra_set.clone()}/>
                       <ExtraPanel category={ExtraCategory::Loa} names={loa_names} selected={loa_selected} callback={onextra_set.clone()}/>
