@@ -1,10 +1,11 @@
 use gloo::console::log;
+use gloo::file::{Blob, ObjectUrl};
 use gloo::net::{http::Request, Error};
 use gloo::storage::{LocalStorage, Storage};
 use wasm_bindgen::JsValue;
 use yew::{
-    classes, function_component, html, use_effect_with, use_reducer, use_state, AttrValue,
-    Callback, Html,
+    classes, function_component, html, use_effect_with, use_node_ref, use_reducer, use_state,
+    AttrValue, Callback, Html,
 };
 
 use components::{
@@ -50,6 +51,9 @@ fn App() -> Html {
     // Release modal control
     let show_release = use_state(|| false);
 
+    // Reference for download anchor element
+    let anchor_node_ref = use_node_ref();
+
     // Fetch YAIXM data
     {
         let yaixm = yaixm.clone();
@@ -67,6 +71,8 @@ fn App() -> Html {
     // Save airspace callback
     let onsave = {
         let state = state.clone();
+        let anchor_node_ref = anchor_node_ref.clone();
+
         Callback::from(move |_| {
             // Save settings in local storage
             LocalStorage::set("settings", &state.settings).ok();
@@ -74,6 +80,17 @@ fn App() -> Html {
             let a = state.settings.clone();
             let object = JsValue::from(format!("{:?}", a));
             log!(object);
+
+            // Create OpenAir data
+            let blob = Blob::new("Hello");
+            let object_url = ObjectUrl::from(blob);
+
+            let anchor_node_ref = anchor_node_ref.cast::<web_sys::HtmlAnchorElement>();
+
+            if let Some(anchor_node_ref) = anchor_node_ref {
+                anchor_node_ref.set_href(&object_url);
+                anchor_node_ref.click();
+            }
         })
     };
 
@@ -211,6 +228,8 @@ fn App() -> Html {
                   </div>
                   <button id="modal-close" class="modal-close is-large" onclick={onhide_release.clone()}></button>
                 </div>
+
+                <a ref={anchor_node_ref} id="download" hidden=true download="openair.txt"></a>
                 </>
             }
         }
