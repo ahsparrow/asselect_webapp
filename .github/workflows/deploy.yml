@@ -1,0 +1,40 @@
+name: test
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        target: wasm32-unknown-unknown
+        override: true
+        profile: minimal
+
+    - name: Install trunk
+      uses: jetli/trunk-action@v0.4.0
+      with:
+        version: 'latest'
+
+    - name: Build
+      run: trunk build --public-url asselect_webapp
+
+    - name: Upload artifacts
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dist
+
+    - name: Deploy to GitHub pages
+      uses: actions/deploy-pages@v4
