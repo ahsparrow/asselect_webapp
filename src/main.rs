@@ -1,3 +1,4 @@
+use futures::try_join;
 use gloo::console::log;
 use gloo::file::{Blob, ObjectUrl};
 use gloo::net::{http::Request, Error};
@@ -38,10 +39,20 @@ pub struct ExtraSetting {
     pub checked: bool,
 }
 
+#[derive(Default)]
+pub struct Overlay {
+    pub overlay_105: String,
+    pub overlay_195: String,
+    pub overlay_atzdz: String,
+}
+
 #[function_component]
 fn App() -> Html {
     // Airspace data
     let yaixm = use_state(|| None);
+
+    // Overlay data
+    let overlay = use_state(|| Overlay::default());
 
     // User interface settings
     let state = use_reducer(|| State {
@@ -54,15 +65,30 @@ fn App() -> Html {
     // Reference for download anchor element
     let anchor_node_ref = use_node_ref();
 
-    // Fetch YAIXM data
+    // Fetch YAIXM and overlay data
     {
         let yaixm = yaixm.clone();
+        let overlay = overlay.clone();
 
         // use_effect_with((), ...) triggers only on first render of component
         use_effect_with((), move |_| {
             wasm_bindgen_futures::spawn_local(async move {
-                let data = fetch_yaixm().await;
-                yaixm.set(data.ok());
+                // Get YAIXM data (and trigger page render)
+                yaixm.set(fetch_yaixm().await.ok());
+
+                // Get overlay data
+                let overlay_105 = fetch_overlay("overlay_105.txt");
+                let overlay_195 = fetch_overlay("overlay_195.txt");
+                let overlay_atzdz = fetch_overlay("overlay_atzdz.txt");
+
+                let response = try_join!(overlay_105, overlay_195, overlay_atzdz);
+                if let Ok((overlay_105, overlay_195, overlay_atzdz)) = response {
+                    overlay.set(Overlay {
+                        overlay_105,
+                        overlay_195,
+                        overlay_atzdz,
+                    });
+                };
             });
             || ()
         });
@@ -247,6 +273,21 @@ async fn fetch_yaixm() -> Result<Yaixm, Error> {
     let result = Request::get("yaixm.json").send().await;
     match result {
         Ok(response) => response.json().await,
+        Err(e) => Err(e),
+    }
+}
+
+// Get overlay data from server
+async fn fetch_overlay(path: &str) -> Result<String, Error> {
+    let result = Request::get(path).send().await;
+    match result {
+        Ok(response) => {
+            if response.ok() {
+                response.text().await
+            } else {
+                Ok("* Missing overlay".to_string())
+            }
+        },
         Err(e) => Err(e),
     }
 }
