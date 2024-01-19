@@ -9,8 +9,8 @@ use yew::{
 
 use convert::openair;
 use components::{
-    airspace_tab::AirspaceTab, extra_panel::ExtraPanel, extra_tab::ExtraTab, notam_tab::NotamTab,
-    options_tab::OptionsTab, tabs::Tabs,
+    about_tab::AboutTab, airspace_tab::AirspaceTab, extra_panel::ExtraPanel,
+    extra_tab::ExtraTab, notam_tab::NotamTab, options_tab::OptionsTab, tabs::Tabs,
 };
 use state::{Action, State};
 use yaixm::{gliding_sites, loa_names, rat_names, wave_names, Yaixm};
@@ -204,6 +204,7 @@ fn App() -> Html {
                 AttrValue::Static("Option"),
                 AttrValue::Static("Extra"),
                 AttrValue::Static("NOTAM"),
+                AttrValue::Static("About"),
             ];
 
             html! {
@@ -228,6 +229,7 @@ fn App() -> Html {
                       <ExtraPanel category={ExtraCategory::Wave} names={wave_names} selected={wave_selected} callback={onextra_set.clone()}/>
                     </ExtraTab>
                     <NotamTab />
+                    <AboutTab />
                   </Tabs>
                 </div>
 

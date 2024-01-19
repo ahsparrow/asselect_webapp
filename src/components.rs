@@ -1,3 +1,4 @@
+pub mod about_tab;
 pub mod airspace_tab;
 pub mod extra_panel;
 pub mod extra_tab;
