@@ -133,7 +133,7 @@ pub fn airspace_tab(props: &Props) -> Html {
                   <div class="control">
                     <div class="select is-fullwidth">
                       <select name="home" onchange={onchange.clone()}>
-                        <option selected={set.home.is_none()}>{"No"}</option>
+                        <option value="no" selected={set.home.is_none()}>{"No"}</option>
                         { gliding_sites() }
                       </select>
                     </div>

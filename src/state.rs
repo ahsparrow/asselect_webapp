@@ -121,7 +121,7 @@ impl Reducible for State {
                     "obstacle" => set.obstacle = get_airtype(&value),
                     "max_level" => set.max_level = value.parse::<u16>().unwrap(),
                     "radio" => set.radio = value == "yes",
-                    "home" => set.home = if value == "None" { None } else { Some(value) },
+                    "home" => set.home = if value == "no" { None } else { Some(value) },
                     "overlay" => {
                         set.overlay = match value.as_str() {
                             "fl105" => Some(Overlay::FL105),
