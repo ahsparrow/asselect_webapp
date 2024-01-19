@@ -547,31 +547,40 @@ fn header(note: &str, airac: &str, commit: &str, settings: &Settings) -> String 
 pub fn openair(yaixm: &Yaixm, settings: &Settings) -> String {
     let mut airspace = yaixm.airspace.clone();
 
-    // Merge LOAs
-    let loas = yaixm
-        .loa
-        .iter()
-        .filter(|&x| (x.default == Some(true)) | settings.loa.contains(&x.name))
-        .collect::<Vec<&Loa>>();
-    merge_loa(&mut airspace, &loas);
-
-    // Add obstacles
-    if let Some(airtype) = settings.obstacle {
-        add_obstacles(&mut airspace, &yaixm.obstacle, airtype);
-    }
-
-    // Append RA(T)s
-    airspace.append(
-        &mut yaixm
+    if settings.format == Format::RatOnly {
+        airspace = yaixm
             .rat
-            .iter()
+            .clone()
+            .into_iter()
             .filter(|rat| settings.rat.contains(&rat.name))
-            .cloned()
-            .collect::<Vec<Feature>>(),
-    );
+            .collect();
+    } else {
+        // Merge LOAs
+        let loas = yaixm
+            .loa
+            .iter()
+            .filter(|&x| (x.default == Some(true)) | settings.loa.contains(&x.name))
+            .collect::<Vec<&Loa>>();
+        merge_loa(&mut airspace, &loas);
 
-    // Merge radio frequencies
-    merge_services(&mut airspace, &yaixm.service);
+        // Add obstacles
+        if let Some(airtype) = settings.obstacle {
+            add_obstacles(&mut airspace, &yaixm.obstacle, airtype);
+        }
+
+        // Append RA(T)s
+        airspace.append(
+            &mut yaixm
+                .rat
+                .iter()
+                .filter(|rat| settings.rat.contains(&rat.name))
+                .cloned()
+                .collect::<Vec<Feature>>(),
+        );
+
+        // Merge radio frequencies
+        merge_services(&mut airspace, &yaixm.service);
+    }
 
     // Build OpenAir data
     let rel = &yaixm.release;
