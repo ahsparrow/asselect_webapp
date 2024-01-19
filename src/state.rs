@@ -113,6 +113,7 @@ impl Reducible for State {
             Action::Set { name, value } => {
                 match name.as_str() {
                     "atz" => set.atz = get_airtype(&value).unwrap_or(AirType::Ctr),
+                    "ils" => set.ils = get_airtype(&value),
                     "unlicensed" => set.unlicensed = get_airtype(&value),
                     "microlight" => set.microlight = get_airtype(&value),
                     "gliding" => set.gliding = get_airtype(&value),
