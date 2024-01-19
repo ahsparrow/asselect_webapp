@@ -540,7 +540,7 @@ fn header(note: &str, airac: &str, commit: &str, settings: &Settings) -> String 
     hdr.push_str(&format!("\nAIRAC: {}\n", &airac[..10]));
     hdr.push_str(&format!("Commit: {}\n", commit));
     hdr.push_str(&format!("Produced: {}\n", Utc::now().to_rfc3339()));
-    hdr.push_str(&format!("{:?}", settings));
+    hdr.push_str(&textwrap::fill(format!("{:?}", settings).as_str(), 72));
 
     // Prepend "*" to lines
     hdr.split('\n')
