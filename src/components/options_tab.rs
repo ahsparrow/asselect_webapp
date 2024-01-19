@@ -106,7 +106,7 @@ pub fn options_tab(props: &Props) -> Html {
                     <div class="select is-fullwidth">
                       <select name="radio" onchange={onchange.clone()}>
                         <option value="no" selected={!set.radio}>{"No"}</option>
-                        <option value="yes" selected={set.radio}>{"Append to name"}</option>
+                        <option value="yes" selected={set.radio}>{"Add to name"}</option>
                       </select>
                     </div>
                   </div>
