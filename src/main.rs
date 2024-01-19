@@ -7,16 +7,16 @@ use yew::{
     AttrValue, Callback, Html,
 };
 
-use convert::openair;
 use components::{
-    about_tab::AboutTab, airspace_tab::AirspaceTab, extra_panel::ExtraPanel,
-    extra_tab::ExtraTab, notam_tab::NotamTab, options_tab::OptionsTab, tabs::Tabs,
+    about_tab::AboutTab, airspace_tab::AirspaceTab, extra_panel::ExtraPanel, extra_tab::ExtraTab,
+    notam_tab::NotamTab, options_tab::OptionsTab, tabs::Tabs,
 };
+use convert::openair;
 use state::{Action, State};
 use yaixm::{gliding_sites, loa_names, rat_names, wave_names, Yaixm};
 
-mod convert;
 mod components;
+mod convert;
 mod state;
 mod yaixm;
 
@@ -287,7 +287,7 @@ async fn fetch_overlay(path: &str) -> Result<String, Error> {
             } else {
                 Ok("* Missing overlay".to_string())
             }
-        },
+        }
         Err(e) => Err(e),
     }
 }

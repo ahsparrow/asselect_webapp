@@ -142,8 +142,7 @@ fn airfilter(feature: &Feature, vol: &Volume, settings: &Settings) -> bool {
         }
         // Gliding Site
         Some(LocalType::Glider) => {
-            settings.gliding.is_none()
-                || settings.home.as_ref() == Some(&feature.name)
+            settings.gliding.is_none() || settings.home.as_ref() == Some(&feature.name)
         }
         // HIRTA/GVS/Laser
         Some(LocalType::Hirta) | Some(LocalType::Gvs) | Some(LocalType::Laser) => {
@@ -261,10 +260,7 @@ fn do_type(feature: &Feature, volume: &Volume, settings: &Settings) -> String {
                 } else {
                     match feature.local_type {
                         Some(LocalType::Hirta) | Some(LocalType::Gvs) | Some(LocalType::Laser) => {
-                            settings
-                                .hirta_gvs
-                                .unwrap_or(AirType::Other)
-                                .as_str()
+                            settings.hirta_gvs.unwrap_or(AirType::Other).as_str()
                         }
                         Some(LocalType::Glider) => "W",
                         _ => "Q",
@@ -279,21 +275,12 @@ fn do_type(feature: &Feature, volume: &Volume, settings: &Settings) -> String {
                         settings.gliding.unwrap_or(AirType::Other).as_str()
                     }
                 }
-                Some(LocalType::Ils) => settings
-                    .ils
-                    .unwrap_or(settings.atz)
-                    .as_str(),
+                Some(LocalType::Ils) => settings.ils.unwrap_or(settings.atz).as_str(),
                 Some(LocalType::Matz) => "MATZ",
-                Some(LocalType::NoAtz) => settings
-                    .unlicensed
-                    .unwrap_or(AirType::Other)
-                    .as_str(),
+                Some(LocalType::NoAtz) => settings.unlicensed.unwrap_or(AirType::Other).as_str(),
                 Some(LocalType::Rat) => "P",
                 Some(LocalType::Tmz) => "TMZ",
-                Some(LocalType::Ul) => settings
-                    .microlight
-                    .unwrap_or(AirType::Other)
-                    .as_str(),
+                Some(LocalType::Ul) => settings.microlight.unwrap_or(AirType::Other).as_str(),
                 Some(LocalType::Rmz) => "RMZ",
                 _ => "OTHER",
             },
