@@ -8,7 +8,7 @@ pub fn about_tab() -> Html {
             <p>{ "ASSelect generates airspace data for the mainland UK in OpenAir format.
               \"Competition\" format is intended for competition organiser use only." }</p>
           <h3 class="subtitle">{ "Airspace Types" }</h3>
-            <p><em>{ "Non-ATZ Airfields" }</em>{ "are busy training aerodromes (without an ATZ) as listed
+            <p><em>{ "Non-ATZ Airfields" }</em>{ " are busy training aerodromes (without an ATZ) as listed
               in section ENR\u{00a0}5.5 of the AIP. Note, the AIP does not include the majority
               of smaller airfields shown on the 1:500000 chart and they are not
               included by ASSelect." }</p>
@@ -19,7 +19,7 @@ pub fn about_tab() -> Html {
               plotted with a radius of 0.5\u{00a0}nm." }</p>
             <p><em>{ "Obstacles" }</em>{ " are listed in ENR\u{00a0}5.4. ASSelect includes only
               obstacles with a height of greater than 600\u{00a0}ft (mainly radio masts)." }</p>
-            <p><em>{ "ILS Feathers" }</em>{ "are not strictly an airspace type, but the
+            <p><em>{ "ILS Feathers" }</em>{ " are not strictly an airspace type, but the
               BGA recommend a radio call if you fly in their vicinity. Note the feather
               is symbolic only - the actual instrument approach procedure will extend to the
               side of the feather." }</p>
