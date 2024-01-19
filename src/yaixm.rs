@@ -50,6 +50,8 @@ pub enum LocalType {
     Matz,
     #[serde(rename = "NOATZ")]
     NoAtz,
+    #[serde(rename = "OBSTACLE")]
+    Obstacle,
     #[serde(rename = "RAT")]
     Rat,
     #[serde(rename = "RMZ")]

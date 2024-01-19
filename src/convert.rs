@@ -31,6 +31,7 @@ impl LocalType {
             LocalType::Laser => "LASER",
             LocalType::Matz => "MATZ",
             LocalType::NoAtz => "NOATZ",
+            LocalType::Obstacle => "OBSTACLE",
             LocalType::Rat => "RAT",
             LocalType::Rmz => "RMZ",
             LocalType::Ul => "UL",
@@ -263,6 +264,9 @@ fn do_type(feature: &Feature, volume: &Volume, settings: &Settings) -> String {
                             settings.hirta_gvs.unwrap_or(AirType::Other).as_str()
                         }
                         Some(LocalType::Glider) => "W",
+                        Some(LocalType::Obstacle) => {
+                            settings.obstacle.unwrap_or(AirType::Other).as_str()
+                        },
                         _ => "Q",
                     }
                 }
@@ -467,25 +471,14 @@ fn merge_loa(airspace: &mut Vec<Feature>, loas: &Vec<&Loa>) {
     }
 }
 
-fn add_obstacles(airspace: &mut Vec<Feature>, obstacles: &Vec<Obstacle>, airtype: AirType) {
-    let icao_type = match airtype {
-        AirType::Danger => IcaoType::D,
-        _ => IcaoType::Other,
-    };
-
-    let icao_class = match airtype {
-        AirType::ClassF => Some(IcaoClass::F),
-        AirType::ClassG => Some(IcaoClass::G),
-        _ => None,
-    };
-
+fn add_obstacles(airspace: &mut Vec<Feature>, obstacles: &Vec<Obstacle>) {
     for obstacle in obstacles {
         let feature = Feature {
             name: obstacle.name.clone(),
-            icao_type: icao_type,
-            icao_class: icao_class,
+            icao_type: IcaoType::DOther,
+            icao_class: None,
             id: None,
-            local_type: None,
+            local_type: Some(LocalType::Obstacle),
             rules: None,
             geometry: vec![Volume {
                 upper: obstacle.elevation.clone(),
@@ -564,8 +557,8 @@ pub fn openair(yaixm: &Yaixm, settings: &Settings) -> String {
         merge_loa(&mut airspace, &loas);
 
         // Add obstacles
-        if let Some(airtype) = settings.obstacle {
-            add_obstacles(&mut airspace, &yaixm.obstacle, airtype);
+        if !settings.obstacle.is_none() {
+            add_obstacles(&mut airspace, &yaixm.obstacle);
         }
 
         // Append RA(T)s
