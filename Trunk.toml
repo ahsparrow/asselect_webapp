@@ -1,0 +1,4 @@
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = ["-c", "mkdir $TRUNK_STAGING_DIR/default; cp data/openair.txt $TRUNK_STAGING_DIR/default"]
