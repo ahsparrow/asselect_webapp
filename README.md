@@ -21,8 +21,8 @@ overlay_195.txt overlay_atzdz.txt to the data directory.
 
 ## Build
 
-  npm run build
+`npm run build
 
 ## Deploy
 
-  npm run deploy
+`npm run deploy
