@@ -1,0 +1,6 @@
+{
+    "scripts": {
+        "build": "trunk build --release",
+        "deploy": "gh-pages -d dist --cname test.asselect.uk"
+    }
+}

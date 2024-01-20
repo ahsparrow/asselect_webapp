@@ -11,3 +11,18 @@ Follow the instructions at https://www.rust-lang.org/tools/install
 ## Install Trunk
 
 `cargo install --locked trunk`
+
+# Deployment
+
+## Copy airspace files
+
+Copy the following files: yaixm.json openair.txt overlay_105.txt
+overlay_195.txt overlay_atzdz.txt to the data directory.
+
+## Build
+
+  npm run build
+
+## Depl0y
+
+  npm run deploy
