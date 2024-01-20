@@ -36,8 +36,8 @@ pub enum Format {
 // Altutude layer overlay
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub enum Overlay {
+    FL195,
     FL105,
-    FL65,
     AtzDz,
 }
 
@@ -124,8 +124,8 @@ impl Reducible for State {
                     "home" => set.home = if value == "no" { None } else { Some(value) },
                     "overlay" => {
                         set.overlay = match value.as_str() {
+                            "fl195" => Some(Overlay::FL195),
                             "fl105" => Some(Overlay::FL105),
-                            "fl65" => Some(Overlay::FL65),
                             "atzdz" => Some(Overlay::AtzDz),
                             _ => None,
                         }

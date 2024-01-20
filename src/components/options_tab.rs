@@ -122,8 +122,8 @@ pub fn options_tab(props: &Props) -> Html {
                     <div class="select is-fullwidth">
                       <select name="overlay" onchange={onchange.clone()}>
                         <option value="no" selected={set.overlay.is_none()}>{"No"}</option>
+                        <option value="fl195" selected={set.overlay == Some(Overlay::FL195)}>{"Bases to FL195"}</option>
                         <option value="fl105" selected={set.overlay == Some(Overlay::FL105)}>{"Bases to FL105"}</option>
-                        <option value="fl65" selected={set.overlay == Some(Overlay::FL65)}>{"Bases to FL65"}</option>
                         <option value="atzdz" selected={set.overlay == Some(Overlay::AtzDz)}>{"Bases to FL105 and ATZ/DZ"}</option>
                       </select>
                     </div>

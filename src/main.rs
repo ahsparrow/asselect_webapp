@@ -106,7 +106,14 @@ fn App() -> Html {
 
             // Create OpenAir data
             let oa = openair(yaixm.as_ref().unwrap(), &state.settings);
-            let blob = Blob::new(oa.as_str());
+            let overlay = match state.settings.overlay {
+                Some(state::Overlay::FL195) => overlay.overlay_195.as_str(),
+                Some(state::Overlay::FL105) => overlay.overlay_105.as_str(),
+                Some(state::Overlay::AtzDz) => overlay.overlay_atzdz.as_str(),
+                None => "",
+            };
+
+            let blob = Blob::new((oa + overlay).as_str());
             let object_url = ObjectUrl::from(blob);
 
             // Trigger a "fake" download
