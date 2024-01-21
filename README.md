@@ -14,15 +14,15 @@ Follow the instructions at https://www.rust-lang.org/tools/install
 
 # Deployment
 
-## Copy airspace files
+## Copy new airspace files
 
-Copy the following files: yaixm.json openair.txt overlay_105.txt
-overlay_195.txt overlay_atzdz.txt to the data directory.
+Copy the files yaixm.json, openair.txt, overlay_105.txt,
+overlay_195.txt, and overlay_atzdz.txt to the data directory.
 
-## Build
+# Build
 
-`npm run build`
+`trunk build --release`
 
 ## Deploy
 
-`npm run deploy`
+`./deploy.sh`
