@@ -284,7 +284,7 @@ fn App() -> Html {
 
         None => {
             html! {
-                { "Loading YAIXM..." }
+                { "Loading Airspace, please wait..." }
             }
         }
     }
