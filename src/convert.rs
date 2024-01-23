@@ -515,7 +515,7 @@ fn add_obstacles(airspace: &mut Vec<Feature>, obstacles: &Vec<Obstacle>) {
 }
 
 // File header
-fn header(note: &str, airac: &str, commit: &str, settings: &Settings) -> String {
+fn header(note: &str, airac: &str, commit: &str, user_agent: &str, settings: &Settings) -> String {
     let mut hdr = "UK Airspace\n\
         Alan Sparrow (airspace@asselect.uk)\n\
         \n\
@@ -535,6 +535,7 @@ fn header(note: &str, airac: &str, commit: &str, settings: &Settings) -> String 
     hdr.push_str(&format!("\nAIRAC: {}\n", &airac[..10]));
     hdr.push_str(&format!("Commit: {}\n", commit));
     hdr.push_str(&format!("Produced: {}\n", Utc::now().to_rfc3339()));
+    hdr.push_str(&format!("User agent: {}\n", user_agent));
     hdr.push_str(&textwrap::fill(format!("{:?}", settings).as_str(), 72));
 
     // Prepend "*" to lines
@@ -552,7 +553,7 @@ fn header(note: &str, airac: &str, commit: &str, settings: &Settings) -> String 
 }
 
 // Generate OpenAir data
-pub fn openair(yaixm: &Yaixm, settings: &Settings) -> String {
+pub fn openair(yaixm: &Yaixm, settings: &Settings, user_agent: &str) -> String {
     let mut airspace = yaixm.airspace.clone();
 
     if settings.format == Format::RatOnly {
@@ -592,7 +593,13 @@ pub fn openair(yaixm: &Yaixm, settings: &Settings) -> String {
 
     // Build OpenAir data
     let rel = &yaixm.release;
-    let mut output = header(&rel.note, &rel.airac_date, &rel.commit, settings);
+    let mut output = header(
+        &rel.note,
+        &rel.airac_date,
+        &rel.commit,
+        user_agent,
+        settings,
+    );
     for feature in airspace {
         for (n, volume) in feature.geometry.iter().enumerate() {
             if airfilter(&feature, volume, settings) {

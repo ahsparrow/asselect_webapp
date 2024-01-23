@@ -115,12 +115,16 @@ fn App() -> Html {
         let state = state.clone();
         let anchor_node_ref = anchor_node_ref.clone();
 
+        let user_agent = web_sys::window()
+            .and_then(|w| w.navigator().user_agent().ok())
+            .unwrap_or_default();
+
         Callback::from(move |_| {
             // Save settings in local storage
             LocalStorage::set("settings", &state.settings).ok();
 
             // Create OpenAir data
-            let oa = openair(yaixm.as_ref().unwrap(), &state.settings);
+            let oa = openair(yaixm.as_ref().unwrap(), &state.settings, &user_agent);
             let overlay = match state.settings.overlay {
                 Some(state::Overlay::FL195) => overlay.overlay_195.as_str(),
                 Some(state::Overlay::FL105) => overlay.overlay_105.as_str(),
