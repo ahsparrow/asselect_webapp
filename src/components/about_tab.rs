@@ -62,8 +62,11 @@ pub fn about_tab() -> Html {
                 {" Schedule "}</a>
               { ". This site is normally updated approximately two weeks in advance of
               the effective date" }</p>
-            <p>{ "You can download the ASSelect airspace database from "}
-              <a class="text-primary" href="https://github.com/ahsparrow/airspace">{ "GitHub" }</a></p>
+            <p>{ "Download the ASSelect airspace database from "}
+              <a class="text-primary" href="https://github.com/ahsparrow/airspace">{ "GitHub" }</a>
+              { ". (Also " }
+              <a class="text-primary" href="https://github.com/ahsparrow/asslect3">{ "GitHub" }</a>
+              { " for website source.)" }</p>
           <h3 class="subtitle">{ "Contact" }</h3>
             <address>{ "Comments, corrections and complaints to: " }
               <a href="mailto:web@asselect.uk">{ "Alan Sparrow" }</a>
