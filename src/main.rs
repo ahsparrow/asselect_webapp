@@ -121,7 +121,7 @@ fn App() -> Html {
 
         Callback::from(move |_| {
             // Save settings in local storage
-            LocalStorage::set("settings", &state.settings).ok();
+            let _ = LocalStorage::set("settings", &state.settings);
 
             // Create OpenAir data
             let oa = openair(yaixm.as_ref().unwrap(), &state.settings, &user_agent);
