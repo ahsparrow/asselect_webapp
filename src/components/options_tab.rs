@@ -62,7 +62,7 @@ pub fn options_tab(props: &Props) -> Html {
                   <div class="control">
                     <div class="select is-fullwidth">
                       <select name="max_level" onchange={onchange.clone()}>
-                        <option value="600" selected={set.max_level == 600}>{"Unlimited"}</option>
+                        <option value="660" selected={set.max_level == 660}>{"Unlimited"}</option>
                         <option value="195" selected={set.max_level == 195}>{"FL195"}</option>
                         <option value="125" selected={set.max_level == 125}>{"FL125"}</option>
                         <option value="105" selected={set.max_level == 105}>{"FL105"}</option>
