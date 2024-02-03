@@ -158,7 +158,15 @@ fn airfilter(feature: &Feature, vol: &Volume, settings: &Settings) -> bool {
         }
         // Gliding Site
         Some(LocalType::Glider) => {
-            settings.gliding.is_none() || settings.home.as_ref() == Some(&feature.name)
+            let rules = feature
+                .rules
+                .iter()
+                .chain(vol.rules.iter())
+                .flatten()
+                .collect::<HashSet<&Rule>>();
+
+            !rules.contains(&Rule::Loa)
+                && (settings.gliding.is_none() || settings.home.as_ref() == Some(&feature.name))
         }
         // HIRTA/GVS/Laser
         Some(LocalType::Hirta) | Some(LocalType::Gvs) | Some(LocalType::Laser) => {
