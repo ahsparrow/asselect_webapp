@@ -205,6 +205,7 @@ fn App() -> Html {
         Some(yaixm) => {
             let airac_date = &yaixm.release.airac_date[..10];
             let release_note = &yaixm.release.note;
+            let filename = format!("uk{}.txt", airac_date);
 
             let mut gliding_sites = gliding_sites(yaixm);
             gliding_sites.sort();
@@ -281,7 +282,7 @@ fn App() -> Html {
                   <button id="modal-close" class="modal-close is-large" onclick={onhide_release.clone()}></button>
                 </div>
 
-                <a ref={anchor_node_ref} id="download" hidden=true download="openair.txt"></a>
+                <a ref={anchor_node_ref} id="download" hidden=true download={filename}></a>
                 </>
             }
         }
