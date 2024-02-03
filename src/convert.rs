@@ -464,12 +464,8 @@ fn merge_loa(airspace: &mut Vec<Feature>, loas: &Vec<&Loa>) {
                     if let Some((f, v)) = find_volume(airspace, &replace.id) {
                         let r = (*replace).clone();
 
-                        // Update seqno from existing volume and add to feature
-                        if let Some(seq) = airspace[f].geometry[v].seq.clone() {
-                            for mut vol in r.geometry {
-                                vol.seq = Some(seq.clone());
-                                airspace[f].geometry.push(vol);
-                            }
+                        for vol in r.geometry {
+                            airspace[f].geometry.push(vol);
                         }
 
                         // Delete the exiting volume
