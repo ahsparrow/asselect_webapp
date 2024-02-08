@@ -5,9 +5,9 @@
 * copyright and related or neighbouring rights to this file. The data
 * is sourced from the UK Aeronautical Information Package (AIP)
 *
-* AIRAC: 2024-01-25
+* AIRAC: 2024-02-22
 * asselect.uk: Default airspace file
-* Commit: 5333da9baedac0357cf265bd5d7184faf02c239b
+* Commit: 103019e425f6648a09059812386f86820f775309
 *
 AC D
 AN ABERDEEN CTA 119.055
