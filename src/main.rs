@@ -67,7 +67,7 @@ fn App() -> Html {
     let yaixm = use_state(|| None);
 
     // Overlay data
-    let overlay = use_state(|| Overlay::default());
+    let overlay = use_state(Overlay::default);
 
     // User interface settings
     let state = use_reducer(|| State {

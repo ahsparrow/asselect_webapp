@@ -577,7 +577,7 @@ pub fn openair(yaixm: &Yaixm, settings: &Settings, user_agent: &str) -> String {
         merge_loa(&mut airspace, &loas);
 
         // Add obstacles
-        if !settings.obstacle.is_none() {
+        if settings.obstacle.is_some() {
             add_obstacles(&mut airspace, &yaixm.obstacle);
         }
 
