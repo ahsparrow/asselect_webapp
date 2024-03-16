@@ -152,21 +152,22 @@ fn airfilter(feature: &Feature, vol: &Volume, settings: &Settings) -> bool {
         Some(LocalType::NoAtz) => settings.unlicensed.is_none(),
         // Microlight
         Some(LocalType::Ul) => settings.microlight.is_none(),
-        // Wave Box
-        Some(LocalType::Glider) if feature.icao_type == IcaoType::DOther => {
-            !settings.wave.contains(&feature.name)
-        }
-        // Gliding Site
+        // Gliding airspace
         Some(LocalType::Glider) => {
-            let rules = feature
-                .rules
-                .iter()
-                .chain(vol.rules.iter())
-                .flatten()
-                .collect::<HashSet<&Rule>>();
+            if feature.icao_type == IcaoType::DOther {
+                // Wave box or LOA area
+                let rules = feature
+                    .rules
+                    .iter()
+                    .chain(vol.rules.iter())
+                    .flatten()
+                    .collect::<HashSet<&Rule>>();
 
-            !rules.contains(&Rule::Loa)
-                && (settings.gliding.is_none() || settings.home.as_ref() == Some(&feature.name))
+                !settings.wave.contains(&feature.name) && !rules.contains(&Rule::Loa)
+            } else {
+                // Gliding Site
+                settings.gliding.is_none() || settings.home.as_ref() == Some(&feature.name)
+            }
         }
         // HIRTA/GVS/Laser
         Some(LocalType::Hirta) | Some(LocalType::Gvs) | Some(LocalType::Laser) => {
