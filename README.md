@@ -1,28 +1,30 @@
-# Installation
+# README
 
-## Install Rust
+## Installation
 
-Follow the instructions at https://www.rust-lang.org/tools/install
+### Install Rust
 
-## Install the WebAssembly target
+Follow the instructions from the [Rust website](https://www.rust-lang.org/tools/install)
+
+### Install the WebAssembly target
 
 `rustup target add wasm32-unknown-unknown`
 
-## Install Trunk
+### Install Trunk
 
 `cargo install --locked trunk`
 
-# Deployment
+## Deployment
 
-## Copy new airspace files
+### Copy new airspace files
 
-Copy the files yaixm.json, openair.txt, overlay_105.txt,
-overlay_195.txt, and overlay_atzdz.txt to the data directory.
+Copy the airspace files `yaixm.json`, `openair.txt`, `overlay_105.txt`,
+`overlay_195.txt`, and `overlay_atzdz.txt` to the data directory.
 
-# Build
+### Build
 
 `trunk build --release`
 
-## Deploy
+### Deploy
 
 `./deploy.sh`
