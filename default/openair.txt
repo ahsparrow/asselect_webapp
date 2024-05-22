@@ -5,9 +5,9 @@
 * copyright and related or neighbouring rights to this file. The data
 * is sourced from the UK Aeronautical Information Package (AIP)
 *
-* AIRAC: 2024-05-16
+* AIRAC: 2024-06-13
 * asselect.uk: Default airspace file
-* Commit: b8c18135ce93001359986e2514df82190f489df4
+* Commit: 5d0552e75f37a27276f9ecaa815f2b87e1926ae0
 *
 AC D
 AN ABERDEEN CTA 119.055
@@ -4344,8 +4344,8 @@ V X=51:14:03 N 000:56:34 W
 DC 2
 *
 AC CTR
-AN FLEETLANDS ATZ 135.700
-AF 135.700
+AN FLEETLANDS ATZ 135.705
+AF 135.705
 AL SFC
 AH 2027 ft
 DP 50:48:10 N 001:09:29 W
@@ -7328,7 +7328,7 @@ AC W
 AN BOOKER 126.555
 AF 126.555
 AL SFC
-AH 2513 ft
+AH 2516 ft
 V X=51:36:42 N 000:48:30 W
 DC 1
 *
@@ -8992,7 +8992,7 @@ AC CTR
 AN WYCOMBE ATZ 126.555
 AF 126.555
 AL SFC
-AH 2520 ft
+AH 2516 ft
 V X=51:36:42 N 000:48:30 W
 DC 2
 *
