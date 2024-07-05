@@ -5,9 +5,9 @@
 * copyright and related or neighbouring rights to this file. The data
 * is sourced from the UK Aeronautical Information Package (AIP)
 *
-* AIRAC: 2024-06-13
+* AIRAC: 2024-07-11
 * asselect.uk: Default airspace file
-* Commit: fc5da25276867034c5e056df509af7eabe1183c9
+* Commit: changed
 *
 AC D
 AN ABERDEEN CTA 119.055
@@ -7472,14 +7472,6 @@ V X=53:53:54 N 000:21:41 W
 DC 1.5
 *
 AC G
-AN BOURN A/F 124.355
-AF 124.355
-AL SFC
-AH 2226 ft
-V X=52:12:38 N 000:02:33 W
-DC 1.5
-*
-AC G
 AN BREIGHTON A/F 129.805
 AF 129.805
 AL SFC
@@ -7976,7 +7968,7 @@ AN DUNKESWELL ATZ 123.480
 AF 123.480
 AL SFC
 AH 2839 ft
-V X=50:51:36 N 003:14:05 W
+V X=50:51:38 N 003:14:06 W
 DC 2
 *
 AC CTR
@@ -9026,6 +9018,18 @@ DP 50:56:32 N 002:26:53 W
 DP 50:55:42 N 002:26:56 W
 DP 50:56:14 N 002:36:23 W
 DP 50:56:26 N 002:36:22 W
+*
+AC CTR
+AN PORTLAND ATZ 122.130
+AF 122.130
+AL SFC
+AH 2009 ft
+DP 50:34:00 N 002:30:06 W
+V D=+
+V X=50:34:04 N 002:26:58 W
+DB 50:34:00 N 002:30:06 W, 50:33:33 N 002:30:00 W
+DP 50:34:00 N 002:30:00 W
+DP 50:34:00 N 002:30:06 W
 *
 AC G
 AN ASHCROFT A/F
