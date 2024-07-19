@@ -5,9 +5,9 @@
 * copyright and related or neighbouring rights to this file. The data
 * is sourced from the UK Aeronautical Information Package (AIP)
 *
-* AIRAC: 2024-07-11
+* AIRAC: 2024-08-08
 * asselect.uk: Default airspace file
-* Commit: 7c8e66dda29e71a9add8d7c46e136b91ef2fce78
+* Commit: 5b93bc4f08709805646964da294ff0335c6331ac
 *
 AC D
 AN ABERDEEN CTA 119.055
@@ -5565,7 +5565,7 @@ DP 51:18:28 N 001:50:04 W
 DP 51:18:52 N 001:42:15 W
 *
 AC Q
-AN D129 WESTON ON THE GREEN
+AN D129 WESTON-ON-THE-GREEN
 AL SFC
 AH FL120
 V X=51:52:46 N 001:13:20 W
@@ -7865,7 +7865,7 @@ AC G
 AN COLL A/F 125.005
 AF 125.005
 AL SFC
-AH 2021 ft
+AH 2020 ft
 V X=56:36:07 N 006:37:04 W
 DC 1.5
 *
