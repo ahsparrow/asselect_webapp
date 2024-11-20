@@ -5,9 +5,9 @@
 * copyright and related or neighbouring rights to this file. The data
 * is sourced from the UK Aeronautical Information Package (AIP)
 *
-* AIRAC: 2024-10-31
+* AIRAC: 2024-11-28
 * asselect.uk: Default airspace file
-* Commit: 6ceb3eca8808a4d9512ad286e1dd0ba111463daf
+* Commit: 63c04c1f239798e19fa56a4fa45651916bad9549
 *
 AC D
 AN ABERDEEN CTA 119.055
@@ -7588,6 +7588,13 @@ V X=51:43:18 N 000:09:15 E
 DC 1.5
 *
 AC G
+AN SYWELL A/F
+AL SFC
+AH 2424 ft
+V X=52:18:22 N 000:47:32 W
+DC 1.5
+*
+AC G
 AN OAKSEY PARK A/F 132.230
 AF 132.230
 AL SFC
@@ -8581,14 +8588,6 @@ DP 50:22:47 N 004:48:35 W
 DP 50:22:04 N 004:49:15 W
 DP 50:25:05 N 004:56:27 W
 DP 50:25:19 N 004:56:15 W
-*
-AC CTR
-AN SYWELL ATZ 122.705
-AF 122.705
-AL SFC
-AH 2424 ft
-V X=52:18:17 N 000:47:32 W
-DC 2
 *
 AC D
 AN NORWICH CTR 119.355
