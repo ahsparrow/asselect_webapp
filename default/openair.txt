@@ -5,9 +5,9 @@
 * copyright and related or neighbouring rights to this file. The data
 * is sourced from the UK Aeronautical Information Package (AIP)
 *
-* AIRAC: 2024-12-26
+* AIRAC: 2025-01-23
 * asselect.uk: Default airspace file
-* Commit: e2bdd3d068c792907d500e4e095c2cc363570a74
+* Commit: 9615c5cabf506c06bfc249c6119f475d0d4aa70b
 *
 AC D
 AN ABERDEEN CTA 119.055
@@ -8718,7 +8718,7 @@ AC CTR
 AN ROCHESTER ATZ 122.255
 AF 122.255
 AL SFC
-AH 2426 ft
+AH 2420 ft
 V X=51:21:07 N 000:30:10 E
 DC 2
 *
